@@ -16,6 +16,18 @@ typer = "^0.15.1"
 [tool.poetry.scripts]
 docker-mount = "docker_mounter.mounter:app"
 
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.8.4"
+pytest = "^8.0.0"
+pytest-mock = "^3.12.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 120
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"

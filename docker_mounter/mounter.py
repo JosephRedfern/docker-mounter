@@ -70,6 +70,7 @@ Some useful links:
 
 DOCKER_ROOT = Path("/var/lib/docker")
 
+
 class DockerMounterException(Exception):
     """
     Base class for exceptions in this module.
@@ -163,24 +164,15 @@ def get_hard_link_paths(chain_ids: list[str], diff_ids: list[str]) -> list[Path]
                 if not cache_id:
                     raise DockerMounterException(f"Empty cache-id file for layer {diff_id}")
         except FileNotFoundError:
-            logger.error(
-                f"Can't find cache-id file at {cache_id_path} for layer {diff_id}",
-                exc_info=True,
-            )
+            raise DockerMounterException(f"Can't find cache-id file at {cache_id_path} for layer {diff_id}")
 
         overlay_directory = DOCKER_ROOT / "overlay2" / cache_id
         if not overlay_directory.exists():
-            logger.error(
-                f"Overlay directory doesn't exist: {overlay_directory} for layer {diff_id}",
-                exc_info=True,
-            )
+            raise DockerMounterException(f"Overlay directory doesn't exist: {overlay_directory} for layer {diff_id}")
 
         hard_link_file = overlay_directory / "link"
         if not hard_link_file.exists():
-            logger.error(
-                f"Hard link file doesn't exist: {hard_link_file} for layer {diff_id}",
-                exc_info=True,
-            )
+            raise DockerMounterException(f"Hard link file doesn't exist: {hard_link_file} for layer {diff_id}")
         else:
             with hard_link_file.open() as f:
                 hard_link = f.read().strip()
@@ -265,15 +257,13 @@ def main(image: str, mount_point: Path | None = None, pull: bool = False, mount:
     try:
         mount_command, mount_point = resolve_and_generate_mount_command(image, mount_point, pull=pull)
     except DockerMounterException as e:
-        logger.error(f"Error generating mount command: {e}", exc_info=True)
-        sys.exit(1)
+        raise typer.Exit(1) from e
 
     if mount:
         logger.info(f"Running mount command: {mount_command}")
         process = subprocess.run(mount_command, stdout=subprocess.PIPE, shell=True)
         if process.returncode != 0:
-            logger.error(f"Mount failed with return code {process.returncode}", exc_info=True)
-            sys.exit(1)
+            raise typer.Exit(1) from DockerMounterException(f"Mount failed with return code {process.returncode}")
         else:
             logger.success(f"Mount successful for {image}, mounted at {str(mount_point)}")
             logger.info(f"You can unmount with: `umount {str(mount_point)}`")
