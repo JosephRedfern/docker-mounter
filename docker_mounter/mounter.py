@@ -8,6 +8,8 @@ import docker
 import typer
 from loguru import logger
 
+app = typer.Typer()
+
 """
 Docker images are made up of multiple layers. Each layer contains some subset of the overall filesystem for the container.
 
@@ -258,6 +260,7 @@ def resolve_and_generate_mount_command(
     return mount_command, mount_point
 
 
+@app.command()
 def main(image: str, mount_point: Path | None = None, pull: bool = False, mount: bool = False) -> None:
     try:
         mount_command, mount_point = resolve_and_generate_mount_command(image, mount_point, pull=pull)
@@ -277,7 +280,3 @@ def main(image: str, mount_point: Path | None = None, pull: bool = False, mount:
     else:
         logger.info(f"Mount command: {mount_command}")
         logger.info(f"Mount point: {str(mount_point)}")
-
-
-if __name__ == "__main__":
-    typer.run(main)

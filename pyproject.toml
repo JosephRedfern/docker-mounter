@@ -5,6 +5,7 @@ description = "Utility to mount Docker images locally without requiring containe
 authors = ["Joseph Redfern <joseph@redfern.me>"]
 license = "MIT"
 readme = "README.md"
+packages = [{include = "docker_mounter"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -12,6 +13,8 @@ docker = "^7.1.0"
 loguru = "^0.7.3"
 typer = "^0.15.1"
 
+[tool.poetry.scripts]
+docker-mount = "docker_mounter.mounter:app"
 
 [build-system]
 requires = ["poetry-core"]

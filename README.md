@@ -12,7 +12,7 @@ It has currently only been tested with Docker version 27.3.1, build ce12230.
 ## Usage
 
 ```bash
- Usage: python -m docker_mounter.mounter [OPTIONS] IMAGE
+Usage: docker-mount [OPTIONS] IMAGE
 
 ╭─ Arguments ─────────────────────────────────────────────────────────╮
 │ *    image      TEXT  [default: None] [required]                    │
@@ -29,20 +29,15 @@ It has currently only been tested with Docker version 27.3.1, build ce12230.
 
 ### Mount ubuntu:latest image to /mnt/docker-image and pull the image if it is not present
 ```bash
-python -m docker_mounter.mounter --mount --pull --mount-point /mnt/docker-image ubuntu:latest
+docker-mount --mount --pull --mount-point /mnt/docker-image ubuntu:latest
 ```
 
 ### Mount ubuntu:latest image to /mnt/docker-image and do not pull the image
 ```bash
-python -m docker_mounter.mounter --mount --no-pull --mount-point /mnt/docker-image ubuntu:latest
+docker-mount --mount --no-pull --mount-point /mnt/docker-image ubuntu:latest
 ```
 
-### Generate command to mount ubuntu:latest image to /mnt/docker-image but do not mount or pullthe image
+### Generate command to mount ubuntu:latest image to /mnt/docker-image but do not mount or pull the image
 ```bash
-python -m docker_mounter.mounter --mount-point /mnt/docker-image ubuntu:latest
-```
-
-### Generate command to mount ubuntu:latest image to /mnt/docker-image but do not mount or pullthe image
-```bash
-python -m docker_mounter.mounter --mount-point /mnt/docker-image ubuntu:latest
+docker-mount --mount-point /mnt/docker-image ubuntu:latest
 ```
