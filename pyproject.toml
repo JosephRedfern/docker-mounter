@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "docker-mounter"
+version = "0.1.0"
+description = "Utility to mount Docker images locally without requiring container creation"
+authors = ["Joseph Redfern <joseph@redfern.me>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+docker = "^7.1.0"
+loguru = "^0.7.3"
+typer = "^0.15.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
