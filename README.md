@@ -23,6 +23,11 @@ Due to use of overlay2, tool is only compatible with Linux 3.19+.
 
 It has currently only been tested with Docker version 27.3.1, build ce12230.
 
+## Required Permissions
+This tool requires:
+1. Access to the Docker daemon socket (user must be root or in the docker group)
+2. Root privileges when using the `--mount` option
+
 ## Usage
 
 ```bash
@@ -43,12 +48,12 @@ Usage: docker-mount [OPTIONS] IMAGE
 
 ### Mount ubuntu:latest image to /mnt/docker-image and pull the image if it is not present
 ```bash
-docker-mount --mount --pull --mount-point /mnt/docker-image ubuntu:latest
+sudo docker-mount --mount --pull --mount-point /mnt/docker-image ubuntu:latest
 ```
 
 ### Mount ubuntu:latest image to /mnt/docker-image and do not pull the image
 ```bash
-docker-mount --mount --no-pull --mount-point /mnt/docker-image ubuntu:latest
+sudo docker-mount --mount --no-pull --mount-point /mnt/docker-image ubuntu:latest
 ```
 
 ### Generate command to mount ubuntu:latest image to /mnt/docker-image but do not mount or pull the image
