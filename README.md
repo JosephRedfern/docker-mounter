@@ -4,6 +4,20 @@ Docker images from within the host operating system without incurring the overhe
 
 This tool relies on some potentially unstable docker implementation details, and may break in future Docker versions!
 
+## Installation
+
+This tool can be installed from PyPI using:
+
+```bash
+pip install docker-mounter
+```
+
+Alternatively, the tool can be installed from source using:
+
+```bash
+poetry install
+```
+
 ## Compatibility
 Due to use of overlay2, tool is only compatible with Linux 3.19+.
 
