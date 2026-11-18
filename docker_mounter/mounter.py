@@ -140,7 +140,7 @@ def generate_overlay_mount_command(mount_point: Path, lower_paths: list[Path], u
 
     absolute_lower_paths = [str(path.resolve()) for path in lower_paths]
 
-    return f"mount -t overlay -o lowerdir={':'.join(absolute_lower_paths)}{upper_dir_arg} none {mount_point.resolve()}"
+    return f"mount -t overlay -o lowerdir={':'.join(reversed(absolute_lower_paths))}{upper_dir_arg} none {mount_point.resolve()}"
 
 
 def get_hard_link_paths(chain_ids: list[str], diff_ids: list[str]) -> list[Path]:
